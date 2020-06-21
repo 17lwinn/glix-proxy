@@ -1,0 +1,82 @@
+#
+# Docker Compose Config Version
+#
+version: "3"
+
+#
+# Services
+#
+services:
+  
+  #
+  # Service: Glix
+  #
+  glix:
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+    restart: "unless-stopped"
+    environment:
+      MONGO: "mongodb://mongo:27017/glix"
+      CADDY: "http://caddy:2019"
+      MAILGUN_DOMAIN: "${MAILGUN_DOMAIN}"
+      MAILGUN_API_KEY: "${MAILGUN_API_KEY}"
+      MAILGUN_SENDER: "${MAILGUN_SENDER}"
+      MAILGUN_ENDPOINT: "${MAILGUN_ENDPOINT}"
+    volumes:
+      - "./build:/app/build"
+      - "./logs:/app/logs"
+    depends_on:
+      - "mongo"
+      - "caddy"
+  
+  #
+  # Service: CaddyServer 2
+  #
+  caddy:
+    image: "caddy/caddy:2.0.0-rc.1-alpine"
+    command: "caddy run --resume --config /root/caddy-config/Caddyfile"
+    restart: "unless-stopped"
+    volumes:
+      - "./docker:/root/caddy-config"
+      - "./.data/caddy-ssl:/data/caddy"
+      - "./.data/caddy-conf:/config/caddy"
+    ports:
+      - "${CADDY_HTTP_PORT_OUT}:${CADDY_HTTP_PORT}"
+      - "${CADDY_HTTPS_PORT_OUT}:${CADDY_HTTPS_PORT}"
+      - "127.0.0.1:2019:2019"
+    environment:
+      CA: "${CA}"
+      MAIL: "${CADDY_MAIL}"
+      CADDY_HTTP_PORT: "${CADDY_HTTP_PORT}"
+      CADDY_HTTP_PORT_OUT: "${CADDY_HTTP_PORT_OUT}"
+      CADDY_HTTPS_PORT: "${CADDY_HTTPS_PORT}"
+      CADDY_HTTPS_PORT_OUT: "${CADDY_HTTPS_PORT_OUT}"
+  
+  #
+  # Service: MongoDB
+  #
+  mongo:
+    image: "mongo:latest"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - "./.data/mongodb:/data/db"
+  
+  #
+  # Service: Mongo-Express
+  #
+  me:
+    image: "mongo-express:latest"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:27018:8081"
+    environment:
+      ME_CONFIG_OPTIONS_EDITORTHEME: "material-darker"
+      ME_CONFIG_BASICAUTH_USERNAME: "${MONGO_USERNAME}"
+      ME_CONFIG_BASICAUTH_PASSWORD: "${MONGO_PASSWORD}"
+    depends_on:
+      - "mongo"
+      - "caddy"
+  

@@ -1,0 +1,51 @@
+{
+	"compilerOptions": {
+		"allowJs": false,
+		"allowSyntheticDefaultImports": false,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"alwaysStrict": true,
+		"charset": "UTF-8",
+		"declaration": false,
+		"experimentalDecorators": false,
+		"esModuleInterop": false,
+		"lib": [
+			"ESNext",
+			"ES2019",
+			"ES2018",
+			"ES2017",
+			"ES2016",
+			"ES2015"
+		],
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"newLine": "LF",
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"strict": true,
+		"target": "ES2017",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"rootDir": "src/",
+		"outDir": "build/",
+		"types": [
+			"node",
+			"express",
+			"mongoose",
+			"node-fetch",
+			"dotenv",
+			"mailgun-js",
+			"psl"
+		]
+	},
+	"exclude": [
+		"node_modules/",
+		"build/"
+	],
+	"include": [
+		"src/"
+	]
+}

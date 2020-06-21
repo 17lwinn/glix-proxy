@@ -1,0 +1,43 @@
+{
+  "name": "glix",
+  "version": "0.1.0",
+  "description": "A public reverse-proxy for Glitch!",
+  "main": "build/index.js",
+  "scripts": {
+    "source:compile": "tsc",
+    "source:compile:watch": "tsc --watch",
+    "dev:start": "ts-node backend/index.ts",
+    "dev:start:watch": "nodemon --watch src/ --exec ts-node backend/index.ts",
+    "build:start": "node build/index.js",
+    "build:start:watch": "nodemon --watch build/ --exec node build/index.js"
+  },
+  "repository": "https://ihacks.dev/ihack2712/glix",
+  "author": "Richard O. Sandberg <richard@ihacks.dev>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.6",
+    "@types/mailgun-js": "^0.22.7",
+    "@types/mongoose": "^5.7.21",
+    "@types/node": "^14.0.10",
+    "@types/node-fetch": "^2.5.7",
+    "@types/psl": "^1.1.0",
+    "@types/zxcvbn": "^4.4.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@discordjs/collection": "^0.1.5",
+    "chalk": "^4.1.0",
+    "core-js": "^3.6.5",
+    "express": "^4.17.1",
+    "ihacks-hash": "^1.0.3",
+    "ihacks-log": "^0.2.7",
+    "mailgun-js": "^0.22.0",
+    "mongoose": "^5.9.17",
+    "node-fetch": "^2.6.0",
+    "psl": "^1.8.0"
+  }
+}

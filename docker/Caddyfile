@@ -1,0 +1,11 @@
+{
+	acme_ca {$CA}
+	email {$MAIL}
+	http_port {$CADDY_HTTP_PORT}
+	https_port {$CADDY_HTTPS_PORT}
+	admin 0.0.0.0:2019
+}
+
+localhost {
+	reverse_proxy http://0.0.0.0:2019
+}
